@@ -10,7 +10,7 @@ class GamesController extends Controller
 {
     public function index()
     {
-        $games = Game::paginate(3);
+        $games = Game::orderBy('averageScore', 'desc')->paginate(5);
         return view('games.index', compact('games'));
     }
 
