@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Game;
 use App\Genre;
 use App\Platform;
@@ -15,9 +14,7 @@ class GamesController extends Controller
     public function index(Request $request)
     {
 
-        $games = Game::with('genre', 'platform')
-        // ->orderBy('averageScore', 'desc')->paginate(5)
-        ;
+        $games = Game::with('genre', 'platform');
 
         if($request->has('name')) {
             $games->where('name', 'like', "%$request->name%");
@@ -45,8 +42,8 @@ class GamesController extends Controller
         }
 
         $games = $games->orderBy('averageScore', 'desc')->paginate(3);
-
-        return view('games.index', compact('games'));
+        $genres = Genre::get();
+        return view('games.index', compact('games', 'genres'));
     }
 
     public function favoriteGame(Game $game)

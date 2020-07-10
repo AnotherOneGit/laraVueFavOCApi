@@ -43,12 +43,12 @@
 
                 <label for="genre">Genre</label>
                 <select name="genre" id="genre">
-                <option value="RPG"
-                {{ request()->genre == 'RPG' ? 'selected' : '' }}
-                >RPG</option>
-                <option value="Fighting"
-                {{ request()->genre == 'Fighting' ? 'selected' : '' }}
-                >Fighting</option>
+
+                @foreach($genres as $genre)
+                    <option value="{{$genre->name}}">
+                    {{$genre->name}}
+                    </option>
+                @endforeach
                 </select>
 
                 <button type='submit'>Search</button>
