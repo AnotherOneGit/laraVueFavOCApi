@@ -44,6 +44,8 @@
                 <label for="genre">Genre</label>
                 <select name="genre" id="genre">
 
+                <option disabled selected value>All</option>
+
                 @foreach($genres as $genre)
                     <option value="{{$genre->name}}"
                     {{request()->genre == $genre->name ? 'selected' : ''}}
