@@ -2,15 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Game;
+use App\Genre;
+use App\Platform;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GamesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::orderBy('averageScore', 'desc')->paginate(5);
+
+        $games = Game::with('genre', 'platform')
+        // ->orderBy('averageScore', 'desc')->paginate(5)
+        ;
+
+        if($request->has('name')) {
+            $games->where('name', 'like', "%$request->name%");
+        }
+
+        if($request->has('exclusive')) {
+            $games->where('Sony', 1)
+                ->where('Nintendo', 0)
+                ->where('Microsoft', 0);
+        }
+
+        if($request->has('date')) {
+            $games->where('firstReleaseDate', '>', $request->date);
+        }
+
+        if($request->has('tier')) {
+            $games->where('tier', $request->tier);
+        }
+
+        if($request->has('genre')) {
+            $games->whereHas('genre', function ($quere) use ($request)
+            {
+                $quere->where('name', 'like',"%$request->genre%");
+            });
+        }
+
+        $games = $games->orderBy('averageScore', 'desc')->paginate(3);
+
         return view('games.index', compact('games'));
     }
 

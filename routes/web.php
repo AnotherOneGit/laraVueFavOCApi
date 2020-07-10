@@ -19,9 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/games', 'GamesController@index');
+Route::get('/home', 'HomeController@index');
+
+Route::get('/games', 'GamesController@index')->name('games.index');
 
 Route::post('/games/favorite/{game}', 'GamesController@favoriteGame');
 Route::post('/games/unfavorite/{game}', 'GamesController@unFavoriteGame');
 
-Route::get('my_favorites', 'UsersController@myFavorites')->middleware('auth');
+Route::get('my_favorites', 'UsersController@myFavorites')->middleware('auth')->name('my.favorites');
