@@ -45,8 +45,9 @@
                 <select name="genre" id="genre">
 
                 @foreach($genres as $genre)
-                    <option value="{{$genre->name}}">
-                    {{$genre->name}}
+                    <option value="{{$genre->name}}"
+                    {{request()->genre == $genre->name ? 'selected' : ''}}
+                    >{{$genre->name}}
                     </option>
                 @endforeach
                 </select>
