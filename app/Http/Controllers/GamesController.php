@@ -82,12 +82,20 @@ class GamesController extends Controller
     public function microsoft()
     {
         $games = Game::with('genre', 'platform');
+        $games = $games->where('Sony', 0)
+        ->where('Nintendo', 0)
+        ->where('Microsoft', 1)
+        ->get();
         return view('games.microsoft', compact('games'));
     }
 
     public function nintendo()
     {
         $games = Game::with('genre', 'platform');
+        $games = $games->where('Sony', 0)
+        ->where('Nintendo', 1)
+        ->where('Microsoft', 0)
+        ->get();
         return view('games.nintendo', compact('games'));
     }
 }
