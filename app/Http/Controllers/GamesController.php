@@ -20,11 +20,11 @@ class GamesController extends Controller
             $games->where('name', 'like', "%$request->name%");
         }
 
-        if($request->has('exclusive')) {
-            $games->where('Sony', 1)
-                ->where('Nintendo', 0)
-                ->where('Microsoft', 0);
-        }
+        // if($request->has('exclusive')) {
+        //     $games->where('Sony', 1)
+        //         ->where('Nintendo', 0)
+        //         ->where('Microsoft', 0);
+        // }
 
         if($request->has('date')) {
             $games->where('firstReleaseDate', '>', $request->date);
@@ -69,6 +69,13 @@ class GamesController extends Controller
     }
 
     public function sony() {
+        $games = Game::with('genre', 'platform');
 
+        $games = $games->where('Sony', 1)
+            ->where('Nintendo', 0)
+            ->where('Microsoft', 0)
+            ->get();
+
+        return view('games.sony', compact('games'));
     }
 }
