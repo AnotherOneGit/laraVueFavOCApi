@@ -78,4 +78,16 @@ class GamesController extends Controller
 
         return view('games.sony', compact('games'));
     }
+
+    public function microsoft()
+    {
+        $games = Game::with('genre', 'platform');
+        return view('games.microsoft', compact('games'));
+    }
+
+    public function nintendo()
+    {
+        $games = Game::with('genre', 'platform');
+        return view('games.nintendo', compact('games'));
+    }
 }

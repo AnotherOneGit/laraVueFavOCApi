@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="container">
-<h1>Sony's Exclusives</h1>
-<img src="/sony.bmp" alt="" srcset="">
+<h1>Nintendo's Exclusives</h1>
+<img src="/nintendo.bmp" alt="" srcset="">
 <br>
 @forelse ($games as $game)
         <div class="panel panel-default">
