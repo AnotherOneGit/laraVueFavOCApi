@@ -41,9 +41,17 @@ class GamesController extends Controller
             });
         }
 
+        if($request->has('platform')) {
+            $games->whereHas('platform', function ($quere) use ($request)
+            {
+                $quere->where('shortName',$request->platform);
+            });
+        }
+
+        $platforms = Platform::get();
         $games = $games->orderBy('averageScore', 'desc')->paginate(3);
         $genres = Genre::get();
-        return view('games.index', compact('games', 'genres'));
+        return view('games.index', compact('games', 'genres', 'platforms'));
     }
 
     public function favoriteGame(Game $game)
@@ -58,5 +66,9 @@ class GamesController extends Controller
         Auth::user()->favorites()->detach($game->id);
 
         return back();
+    }
+
+    public function sony() {
+
     }
 }

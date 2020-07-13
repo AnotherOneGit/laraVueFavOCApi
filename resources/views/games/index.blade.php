@@ -8,24 +8,21 @@
             <div class="page-header">
                 <h1>All Games</h1>
             </div>
-            <br>
 
             <form action="/games">
 
                 <label for="name">Name</label>
                 <input type="text" name="name" value="{{request()->name}}">
 
-                <label for="exclusive">Exclusive</label>
-                <input type="checkbox" name="exclusive" id="exclusive" {{request()->exclusive ? 'checked' : ''}}>
+                <!-- <label for="exclusive">Exclusive</label>
+                <input type="checkbox" name="exclusive" id="exclusive" {{request()->exclusive ? 'checked' : ''}}> -->
 
                 <label for="date">First Release Date</label>
                 <input required type="date" name="date" id="date" value={{request()->date ? : '1999-09-09'}}>
 
                 <label for="tier">Tier</label>
                 <select name="tier" id="tier">
-
                     <option disabled selected value>All</option>
-
                     <option
                     value="Mighty"
                     {{ request()->tier == 'Mighty' ? 'selected' : '' }}
@@ -43,13 +40,22 @@
 
                 <label for="genre">Genre</label>
                 <select name="genre" id="genre">
-
                 <option disabled selected value>All</option>
-
                 @foreach($genres as $genre)
                     <option value="{{$genre->name}}"
                     {{request()->genre == $genre->name ? 'selected' : ''}}
                     >{{$genre->name}}
+                    </option>
+                @endforeach
+                </select>
+
+                <label for="platform">Platform</label>
+                <select name="platform" id="platform">
+                <option disabled selected value>All</option>
+                @foreach($platforms as $platform)
+                    <option value="{{$platform->shortName}}"
+                    {{request()->platform == $platform->shortName ? 'selected' : ''}}
+                    >{{$platform->shortName}}
                     </option>
                 @endforeach
                 </select>
@@ -63,7 +69,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2>{{ $game->name }}</h2>
-                        <h2>{{$game->firstReleaseDate}}</h2>
+                        <h3>{{$game->firstReleaseDate}}</h3>
                     </div>
 
                     Genres:
@@ -76,9 +82,9 @@
                         {{ $platform->shortName }},
                     @endforeach
                     <br>
-                    Exclusive: {{count($game->platform) == 1 ? 'Yes' : 'No'}}
+                    <!-- Exclusive: {{count($game->platform) == 1 ? 'Yes' : 'No'}} -->
                     <div class="panel-body">
-                    <h3>Average score: {{ $game->averageScore }}</h3>
+                    Average score: <strong>{{ $game->averageScore }}</strong>
                     </div>
             @if(Auth::check())
                 <div class="panel-footer">
